@@ -1,17 +1,59 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
 
+import { View, Text, Platform, StyleSheet } from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-
+import { Button } from '@expo/ui/jetpack-compose';
 import { DateTimePicker } from '@expo/ui/jetpack-compose';
 
 import React, { useState } from 'react';
 
-export default function HomeScreen() {
+
+const Greeting = ({ name }) => {
+  return (
+    <View style={styles.greetingContainer}>
+      <Text style={styles.greetingText}>Ciao, {name}!</Text>
+    </View>
+  );
+};
+
+const DateTimePickerView = () => {
+
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+
+ 
+    return (
+			<View>
+				<DateTimePicker
+				  onDateSelected={date => {
+					setSelectedDate(date);
+				  }}
+				  displayedComponents='date'
+				  initialDate={selectedDate.toISOString()}
+				  variant='picker'
+				/>
+
+				<DateTimePicker
+				  onDateSelected={date => {
+					setSelectedDate(date);
+				  }}
+				  displayedComponents='hourAndMinute'
+				  initialDate={selectedDate.toISOString()}
+				  variant='picker'
+				/>
+			</View> 
+
+	) 
+ 
+ 
+}
+
+export default function HomeScreen() {
+
+
 
   return (
     <ParallaxScrollView
@@ -58,25 +100,8 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       
-
-<DateTimePicker
-  onDateSelected={date => {
-    setSelectedDate(date);
-  }}
-  displayedComponents='date'
-  initialDate={selectedDate.toISOString()}
-  variant='picker'
-/>
-
-<DateTimePicker
-  onDateSelected={date => {
-    setSelectedDate(date);
-  }}
-  displayedComponents='hourAndMinute'
-  initialDate={selectedDate.toISOString()}
-  variant='picker'
-/>
-
+<Greeting  name="Giacomo" />
+<DateTimePickerView />
     </ParallaxScrollView>
   );
 }
